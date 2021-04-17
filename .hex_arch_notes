@@ -1,0 +1,25 @@
+The ports and adapters pattern is deliberately written pretending that all ports are fundamentally 
+similar. That pretense is useful at the architectural level. In implementation, ports and adapters
+show up in two flavors, which I’ll call ‘’primary’’ and ‘’secondary’’, for soon-to-be-obvious reasons.
+They could be also called ‘’driving’’ adapters and ‘’driven’’ adapters.
+
+
+A common mistake is to write use cases to contain intimate knowledge of the technology sitting outside each port.
+These use cases have earned a justifiably bad name in the industry for being long, hard-to-read, boring,
+brittle, and expensive to maintain.
+
+Understanding the ports and adapters architecture, we can see that the use cases should generally 
+be written at the application boundary (the inner hexagon), to specify the functions and events supported 
+by the application, regardless of external technology. These use cases are shorter, easier to read, 
+less expensive to maintain, and more stable over time.
+
+In other words, the domain logic/use cases/business logic should not cross or depend on any layer 
+outside of the domain/core. 
+
+
+What exactly a port is and isn’t is largely a matter of taste. At the one extreme, every use case 
+could be given its own port, producing hundreds of ports for many applications. Alternatively, one 
+could imagine merging all primary ports and all secondary ports so there are only two ports, a left 
+side and a right side.
+
+

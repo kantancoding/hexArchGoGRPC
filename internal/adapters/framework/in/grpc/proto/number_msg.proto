@@ -1,0 +1,34 @@
+syntax = "proto3"; 
+
+package pb;
+
+/*
+For Go: This path is relative to --go_out=plugins=grpc:internal
+from the protoc command. So the resulting package will be
+in 'internal/pb' 
+*/
+option go_package = "./pb";
+
+/*
+An object representing the result of an arithmetic 
+operation
+
+fields:
+  value: The resulting value of an arithmetic operation
+*/
+message Answer {
+  int32 value = 1;
+}
+
+/*
+An object representing the numbers to perform the arithmetic
+operation on
+
+fields:
+    a: The number before the operator (a + b) 
+    b: The number after the operator (a + b)
+*/
+message OperationParameters {
+  int32 a = 1;
+  int32 b = 2;
+}
