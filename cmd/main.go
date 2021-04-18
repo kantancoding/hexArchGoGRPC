@@ -35,6 +35,16 @@ func main() {
 
 	// plug:
 	appAdapter = api.NewAdapter(dbaseAdapter, arithAdapter)
+
+	// gRPCAdapter is a primary actor which drives the application
 	gRPCAdapter = gRPC.NewAdapter(appAdapter)
 	gRPCAdapter.Run()
+
+	// HTTPAdapter is a primary actor which drives the application
+	//HTTPAdapter = gRPC.NewAdapter(appAdapter)
+	//HTTPAdapter.Run()
+
+	// TestAdapter is a primary actor which drives the application
+	//TestAdapter = gRPC.NewAdapter(appAdapter)
+	//TestAdapter.Run()
 }
