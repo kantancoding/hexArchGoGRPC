@@ -7,7 +7,7 @@ gen:
 		internal/adapters/framework/in/grpc/proto/*.proto
 
 clean:
-	rm -rf internal/adapters/framework/in/grpc 
+	rm -rf internal/adapters/framework/in/grpc/pb
 	
 run:
 	echo "run"
