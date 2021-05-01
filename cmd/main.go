@@ -1,50 +1,38 @@
 package main
 
 import (
+	"hex/internal/adapters/app/api"
+	"hex/internal/adapters/core/arithmetic"
+	"hex/internal/adapters/framework/right/db"
+	"hex/internal/ports"
 	"log"
+	"os"
 
-	"hex-arch-go-grpc/internal/adapters/app/api"
-	"hex-arch-go-grpc/internal/adapters/framework/out/db"
-	"hex-arch-go-grpc/internal/ports"
-
-	gRPC "hex-arch-go-grpc/internal/adapters/framework/in/grpc"
-
-	_ "github.com/go-sql-driver/mysql"
+	gRPC "hex/internal/adapters/framework/left/grpc"
 )
-
-func init() {
-	log.SetFlags(log.Ldate | log.Ltime)
-}
 
 func main() {
 	var err error
 
 	// ports
 	var dbaseAdapter ports.DbPort
-	var arithAdapter ports.ArithemeticPort
+	var core ports.ArithmeticPort
 	var appAdapter ports.APIPort
 	var gRPCAdapter ports.GRPCPort
 
-	// init db: Any database or mock database that implements DbPort can be used here.
-	// dbaseAdapter is a secondary actor and it is driven by the application.
-	dbaseAdapter, err = db.NewAdapter("mysql", "admin:Admin123@tcp(staticdoc.ctmspwuawvbg.ap-northeast-1.rds.amazonaws.com:3306)/staticdoc")
+	dbaseDriver := os.Getenv("DB_DRIVER")
+	dsourceName := os.Getenv("DS_NAME")
+
+	dbaseAdapter, err = db.NewAdapter(dbaseDriver, dsourceName)
 	if err != nil {
-		log.Fatalf("Failed to initiate database connection: %v", err)
+		log.Fatalf("failed to initiate dbase connection: %v", err)
 	}
 	defer dbaseAdapter.CloseDbConnection()
 
-	// plug:
-	appAdapter = api.NewAdapter(dbaseAdapter, arithAdapter)
+	core = arithmetic.NewAdapter()
 
-	// gRPCAdapter is a primary actor which drives the application
+	appAdapter = api.NewAdapter(dbaseAdapter, core)
+
 	gRPCAdapter = gRPC.NewAdapter(appAdapter)
 	gRPCAdapter.Run()
-
-	// HTTPAdapter is a primary actor which drives the application
-	//HTTPAdapter = gRPC.NewAdapter(appAdapter)
-	//HTTPAdapter.Run()
-
-	// TestAdapter is a primary actor which drives the application
-	//TestAdapter = gRPC.NewAdapter(appAdapter)
-	//TestAdapter.Run()
 }

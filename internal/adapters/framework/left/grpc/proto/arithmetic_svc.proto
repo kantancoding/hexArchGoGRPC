@@ -1,55 +1,14 @@
-syntax = "proto3"; 
+syntax = "proto3";
 
 package pb;
 
 import "number_msg.proto";
 
-/*
-For Go: This path is relative to --go_out=plugins=grpc:internal
-from the protoc command. So the resulting package will be
-in 'internal/pb' 
-*/
 option go_package = "./pb";
 
-/*
-A skeleton grpc service that implements the Hexagonal/Ports & Adapters
-architecture. All of the rpc methods here are bare-bones placeholders
-and should be replaced by your own rpc methods.
-*/
 service ArithmeticService {
-  /*
-  returns the result of adding two numbers 
-
-  service responses:
-    InvalidArgument: Invalid or empty numbers 
-    Internal: An unexpected server error occurred
-  */
   rpc GetAddition(OperationParameters) returns (Answer) {}
-
-  /*
-  returns the result of subtracting one number from the other
-
-  service responses:
-    InvalidArgument: Invalid or empty numbers 
-    Internal: An unexpected server error occurred
-  */
   rpc GetSubtraction(OperationParameters) returns (Answer) {}
-
-  /*
-  returns the result of multiplying one number by the other
-
-  service responses:
-    InvalidArgument: Invalid or empty numbers 
-    Internal: An unexpected server error occurred
-  */
   rpc GetMultiplication(OperationParameters) returns (Answer) {}
-
-  /*
-  returns the result of dividing one number by the other
-
-  service responses:
-    InvalidArgument: Invalid or empty numbers 
-    Internal: An unexpected server error occurred
-  */
   rpc GetDivision(OperationParameters) returns (Answer) {}
 }

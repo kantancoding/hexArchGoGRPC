@@ -1,0 +1,27 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: "Admin123"
+      MYSQL_DATABASE: "hex_test"
+    volumes: 
+      - ./testdb:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
+
+  grpc: 
+    build: .
+    environment:
+      DB_DRIVER: "mysql"
+      DS_NAME: "root:Admin123@tcp(db:3306)/hex_test"
+      MYSQL_HOST: "db"
+      MYSQL_PASSWORD: "Admin123"
+      MYSQL_DB: "hex_test"
+      MYSQL_USER: "root"
+      MYSQL_PORT: "3306"
+    depends_on:
+      - db
+    command: ["go", "test", "-v", "./..."]
