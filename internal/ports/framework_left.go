@@ -6,6 +6,7 @@ import (
 	"hex/internal/adapters/framework/left/grpc/pb"
 )
 
+// GRPCPort is the port for an grpc adapter
 type GRPCPort interface {
 	Run()
 	GetAddition(ctx context.Context, req *pb.OperationParameters) (*pb.Answer, error)

@@ -1,12 +1,13 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"hex/internal/adapters/app/api"
 	"hex/internal/adapters/core/arithmetic"
 	"hex/internal/adapters/framework/right/db"
 	"hex/internal/ports"
-	"log"
-	"os"
 
 	gRPC "hex/internal/adapters/framework/left/grpc"
 )

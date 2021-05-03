@@ -9,6 +9,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// GetAddition gets the result of adding parameters a and b
 func (grpca Adapter) GetAddition(ctx context.Context, req *pb.OperationParameters) (*pb.Answer, error) {
 	var err error
 	ans := &pb.Answer{}
@@ -29,6 +30,7 @@ func (grpca Adapter) GetAddition(ctx context.Context, req *pb.OperationParameter
 	return ans, nil
 }
 
+// GetSubtraction gets the result of subtracting parameters a and b
 func (grpca Adapter) GetSubtraction(ctx context.Context, req *pb.OperationParameters) (*pb.Answer, error) {
 	var err error
 	ans := &pb.Answer{}
@@ -49,6 +51,7 @@ func (grpca Adapter) GetSubtraction(ctx context.Context, req *pb.OperationParame
 	return ans, nil
 }
 
+// GetMultiplication gets the result of multiplying parameters a and b
 func (grpca Adapter) GetMultiplication(ctx context.Context, req *pb.OperationParameters) (*pb.Answer, error) {
 	var err error
 	ans := &pb.Answer{}
@@ -69,6 +72,7 @@ func (grpca Adapter) GetMultiplication(ctx context.Context, req *pb.OperationPar
 	return ans, nil
 }
 
+// GetDivision gets the result of dividing parameters a and b
 func (grpca Adapter) GetDivision(ctx context.Context, req *pb.OperationParameters) (*pb.Answer, error) {
 	var err error
 	ans := &pb.Answer{}

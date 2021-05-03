@@ -10,14 +10,18 @@ import (
 	"google.golang.org/grpc"
 )
 
+// Adapter implements the GRPCPort interface
 type Adapter struct {
 	api ports.APIPort
 }
 
+// NewAdapter creates a new Adapter
 func NewAdapter(api ports.APIPort) *Adapter {
 	return &Adapter{api: api}
 }
 
+// Run registers the ArithmeticServiceServer to a grpcServer and serves on
+// the specified port
 func (grpca Adapter) Run() {
 	var err error
 

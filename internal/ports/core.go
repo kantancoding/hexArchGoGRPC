@@ -1,5 +1,6 @@
 package ports
 
+// ArithmeticPort is the port for an arithmetic adapter
 type ArithmeticPort interface {
 	Addition(a int32, b int32) (int32, error)
 	Subtraction(a int32, b int32) (int32, error)

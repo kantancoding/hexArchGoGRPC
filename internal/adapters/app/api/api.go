@@ -4,15 +4,18 @@ import (
 	"hex/internal/ports"
 )
 
+// Adapter implements the APIPort interface
 type Adapter struct {
 	db    ports.DbPort
 	arith ports.ArithmeticPort
 }
 
+// NewAdapter creates a new Adapter
 func NewAdapter(db ports.DbPort, arith ports.ArithmeticPort) *Adapter {
 	return &Adapter{db: db, arith: arith}
 }
 
+// GetAddition gets the result of adding parameters a and b
 func (apia Adapter) GetAddition(a, b int32) (int32, error) {
 	answer, err := apia.arith.Addition(a, b)
 	if err != nil {
@@ -27,6 +30,7 @@ func (apia Adapter) GetAddition(a, b int32) (int32, error) {
 	return answer, nil
 }
 
+// GetSubtraction gets the result of subtracting parameters a and b
 func (apia Adapter) GetSubtraction(a, b int32) (int32, error) {
 	answer, err := apia.arith.Subtraction(a, b)
 	if err != nil {
@@ -41,6 +45,7 @@ func (apia Adapter) GetSubtraction(a, b int32) (int32, error) {
 	return answer, nil
 }
 
+// GetMultiplication gets the result of multiplying parameters a and b
 func (apia Adapter) GetMultiplication(a, b int32) (int32, error) {
 	answer, err := apia.arith.Multiplication(a, b)
 	if err != nil {
@@ -55,6 +60,7 @@ func (apia Adapter) GetMultiplication(a, b int32) (int32, error) {
 	return answer, nil
 }
 
+// GetDivision gets the result of dividing parameters a and b
 func (apia Adapter) GetDivision(a, b int32) (int32, error) {
 	answer, err := apia.arith.Division(a, b)
 	if err != nil {
