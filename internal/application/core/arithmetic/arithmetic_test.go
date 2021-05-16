@@ -1,12 +1,13 @@
 package arithmetic
 
 import (
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestAddition(t *testing.T) {
-	arith := NewAdapter()
+	arith := New()
 
 	answer, err := arith.Addition(1, 1)
 	if err != nil {
@@ -17,7 +18,7 @@ func TestAddition(t *testing.T) {
 }
 
 func TestSubtraction(t *testing.T) {
-	arith := NewAdapter()
+	arith := New()
 
 	answer, err := arith.Subtraction(1, 1)
 	if err != nil {
@@ -28,7 +29,7 @@ func TestSubtraction(t *testing.T) {
 }
 
 func TestMultiplication(t *testing.T) {
-	arith := NewAdapter()
+	arith := New()
 
 	answer, err := arith.Multiplication(1, 1)
 	if err != nil {
@@ -39,7 +40,7 @@ func TestMultiplication(t *testing.T) {
 }
 
 func TestDivision(t *testing.T) {
-	arith := NewAdapter()
+	arith := New()
 
 	answer, err := arith.Division(1, 1)
 	if err != nil {

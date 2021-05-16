@@ -4,19 +4,19 @@ import (
 	"hex/internal/ports"
 )
 
-// Adapter implements the APIPort interface
-type Adapter struct {
+// Application implements the APIPort interface
+type Application struct {
 	db    ports.DbPort
-	arith ports.ArithmeticPort
+	arith Arithmetic
 }
 
-// NewAdapter creates a new Adapter
-func NewAdapter(db ports.DbPort, arith ports.ArithmeticPort) *Adapter {
-	return &Adapter{db: db, arith: arith}
+// NewApplication creates a new Application
+func NewApplication(db ports.DbPort, arith Arithmetic) *Application {
+	return &Application{db: db, arith: arith}
 }
 
 // GetAddition gets the result of adding parameters a and b
-func (apia Adapter) GetAddition(a, b int32) (int32, error) {
+func (apia Application) GetAddition(a, b int32) (int32, error) {
 	answer, err := apia.arith.Addition(a, b)
 	if err != nil {
 		return 0, err
@@ -31,7 +31,7 @@ func (apia Adapter) GetAddition(a, b int32) (int32, error) {
 }
 
 // GetSubtraction gets the result of subtracting parameters a and b
-func (apia Adapter) GetSubtraction(a, b int32) (int32, error) {
+func (apia Application) GetSubtraction(a, b int32) (int32, error) {
 	answer, err := apia.arith.Subtraction(a, b)
 	if err != nil {
 		return 0, err
@@ -46,7 +46,7 @@ func (apia Adapter) GetSubtraction(a, b int32) (int32, error) {
 }
 
 // GetMultiplication gets the result of multiplying parameters a and b
-func (apia Adapter) GetMultiplication(a, b int32) (int32, error) {
+func (apia Application) GetMultiplication(a, b int32) (int32, error) {
 	answer, err := apia.arith.Multiplication(a, b)
 	if err != nil {
 		return 0, err
@@ -61,7 +61,7 @@ func (apia Adapter) GetMultiplication(a, b int32) (int32, error) {
 }
 
 // GetDivision gets the result of dividing parameters a and b
-func (apia Adapter) GetDivision(a, b int32) (int32, error) {
+func (apia Application) GetDivision(a, b int32) (int32, error) {
 	answer, err := apia.arith.Division(a, b)
 	if err != nil {
 		return 0, err
