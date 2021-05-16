@@ -7,11 +7,11 @@ import (
 // Adapter implements the APIPort interface
 type Adapter struct {
 	db    ports.DbPort
-	arith ports.ArithmeticPort
+	arith Arithmetic
 }
 
 // NewAdapter creates a new Adapter
-func NewAdapter(db ports.DbPort, arith ports.ArithmeticPort) *Adapter {
+func NewApplication(db ports.DbPort, arith Arithmetic) *Adapter {
 	return &Adapter{db: db, arith: arith}
 }
 

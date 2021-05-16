@@ -7,11 +7,14 @@ import (
 	"os"
 	"testing"
 
-	"hex/internal/adapters/app/api"
-	"hex/internal/adapters/core/arithmetic"
-	"hex/internal/adapters/framework/left/grpc/pb"
+	// application
+	"hex/internal/application/api"
+	"hex/internal/application/core/arithmetic"
+
+	// adapters
 	"hex/internal/adapters/framework/right/db"
-	"hex/internal/ports"
+
+	"hex/internal/adapters/framework/left/grpc/pb"
 
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc"
@@ -27,25 +30,35 @@ func init() {
 	lis = bufconn.Listen(bufSize)
 	grpcServer := grpc.NewServer()
 
-	// ports
-	var dbaseAdapter ports.DbPort
-	var core ports.ArithmeticPort
-	var appAdapter ports.APIPort
-	var gRPCAdapter ports.GRPCPort
-
 	dbaseDriver := os.Getenv("DB_DRIVER")
 	dsourceName := os.Getenv("DS_NAME")
 
-	dbaseAdapter, err = db.NewAdapter(dbaseDriver, dsourceName)
+	dbAdapter, err := db.NewAdapter(dbaseDriver, dsourceName)
 	if err != nil {
 		log.Fatalf("failed to initiate dbase connection: %v", err)
 	}
+	defer dbAdapter.CloseDbConnection()
 
-	core = arithmetic.NewAdapter()
+	// core
+	core := arithmetic.New()
 
-	appAdapter = api.NewAdapter(dbaseAdapter, core)
+	// NOTE: The application's right side port for driven
+	// adapters, in this case, a db adapter.
+	// Therefore the type for the dbAdapter parameter
+	// that is to be injected into the NewApplication will
+	// be of type DbPort
+	applicationAPI := api.NewApplication(dbAdapter, core)
 
-	gRPCAdapter = NewAdapter(appAdapter)
+	// NOTE: We use dependency injection to give the grpc
+	// adapter access to the application, therefore
+	// the location of the port is inverted. That is
+	// the grpc adapter accesses the hexagon's driving port at the
+	// application boundary via dependency injection,
+	// therefore the type for the applicaitonAPI parameter
+	// that is to be injected into the gRPC adapter will
+	// be of type APIPort which is our hexagons left side
+	// port for driving adapters
+	gRPCAdapter := NewAdapter(applicationAPI)
 
 	pb.RegisterArithmeticServiceServer(grpcServer, gRPCAdapter)
 	go func() {
