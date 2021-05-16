@@ -10,7 +10,7 @@ type Application struct {
 	arith Arithmetic
 }
 
-// NewAdapter creates a new Adapter
+// NewApplication creates a new Application
 func NewApplication(db ports.DbPort, arith Arithmetic) *Application {
 	return &Application{db: db, arith: arith}
 }
