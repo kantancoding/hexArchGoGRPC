@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	// application
@@ -14,15 +13,10 @@ import (
 )
 
 func main() {
-	var err error
-
 	dbaseDriver := os.Getenv("DB_DRIVER")
 	dsourceName := os.Getenv("DS_NAME")
 
-	dbAdapter, err := db.NewAdapter(dbaseDriver, dsourceName)
-	if err != nil {
-		log.Fatalf("failed to initiate dbase connection: %v", err)
-	}
+	dbAdapter := db.NewAdapter(dbaseDriver, dsourceName)
 	defer dbAdapter.CloseDbConnection()
 
 	// core

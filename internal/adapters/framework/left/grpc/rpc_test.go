@@ -26,17 +26,13 @@ const bufSize = 1024 * 1024
 var lis *bufconn.Listener
 
 func init() {
-	var err error
 	lis = bufconn.Listen(bufSize)
 	grpcServer := grpc.NewServer()
 
 	dbaseDriver := os.Getenv("DB_DRIVER")
 	dsourceName := os.Getenv("DS_NAME")
 
-	dbAdapter, err := db.NewAdapter(dbaseDriver, dsourceName)
-	if err != nil {
-		log.Fatalf("failed to initiate dbase connection: %v", err)
-	}
+	dbAdapter := db.NewAdapter(dbaseDriver, dsourceName)
 
 	// core
 	core := arithmetic.New()
