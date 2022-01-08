@@ -16,7 +16,7 @@ type Adapter struct {
 }
 
 // NewAdapter creates a new Adapter
-func NewAdapter(driverName, dataSourceName string) (*Adapter, error) {
+func NewAdapter(driverName, dataSourceName string) *Adapter {
 	// connect
 	db, err := sql.Open(driverName, dataSourceName)
 	if err != nil {
@@ -29,7 +29,7 @@ func NewAdapter(driverName, dataSourceName string) (*Adapter, error) {
 		log.Fatalf("db ping failure: %v", err)
 	}
 
-	return &Adapter{db: db}, nil
+	return &Adapter{db: db}
 }
 
 // CloseDbConnection closes the db  connection
